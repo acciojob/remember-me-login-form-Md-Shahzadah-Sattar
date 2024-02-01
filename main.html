@@ -1,16 +1,93 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 300px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+        }
+        #existing {
+            margin-top: 16px;
+        }
+    </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+
+    <h1>Login Form</h1>
+
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Username">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Password">
+
+        <label for="checkbox">
+            <input type="checkbox" id="checkbox" name="remember"> Remember me
+        </label>
+
+        <input type="submit" id="submit" value="Submit">
+    </form>
+
+    <button id="existing">Login as existing user</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('loginForm');
+            var checkbox = document.getElementById('checkbox');
+            var submitButton = document.getElementById('submit');
+            var existingButton = document.getElementById('existing');
+
+            // Check if there are saved details
+            var savedUsername = localStorage.getItem('username');
+            var savedPassword = localStorage.getItem('password');
+
+            if (savedUsername && savedPassword) {
+                existingButton.style.display = 'block';
+            }
+
+            // Form submit event
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                var username = document.getElementById('username').value;
+                var password = document.getElementById('password').value;
+
+                if (checkbox.checked) {
+                    // Save details to local storage
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('password', password);
+                } else {
+                    // Remove saved details from local storage
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('password');
+                }
+
+                alert('Logged in as ' + username);
+            });
+
+            // Existing user button click event
+            existingButton.addEventListener('click', function() {
+                alert('Logged in as ' + savedUsername);
+            });
+        });
+    </script>
 
 </body>
-
 </html>
